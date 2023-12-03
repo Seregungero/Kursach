@@ -3,7 +3,7 @@ import ChoiceMesage from '../vendor/ChoiceMesage'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const ViewProfile = ({ admins }) => {
+const ViewProfile = () => {
 	const navigate = useNavigate();
 	const [info, setInfo] = useState({
 		message: "",
@@ -30,7 +30,7 @@ const ViewProfile = ({ admins }) => {
 			<span>Телефон</span>
 			<p>{localStorage.getItem('user_tel')}</p>
 			{
-				(admins.includes(localStorage.getItem('user_email')))
+				(localStorage.getItem("super_user") === "1")
 					? (<h1>Вы Администратор!!!</h1>)
 					: undefined}
 			<button onClick={() => setInfo({message: "Вы уверены что хотите удалить аккаунт?", status: true})}>
