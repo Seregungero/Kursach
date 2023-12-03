@@ -5,6 +5,7 @@ import SignIn from './SignIn';
 import Dashboard from './Dashboard';
 import ViewProfile from './ViewProfile';
 import CartUser from './CartUser';
+import AddItem from './AddItem';
 
 const Main = ({ admins }) => {
 	return (
@@ -13,6 +14,7 @@ const Main = ({ admins }) => {
 				<Route path='/' element={<Dashboard />} />
 				<Route path='/cart' element={<CartUser />}/>
 				<Route path='/userinfo' element={<ViewProfile />} />
+				<Route path='/add/item' element={<AddItem />}/>
 				<Route path='/register' element={<SignUp admins={admins} />} />
 				<Route path='/login' element={<SignIn admins={admins} />} />
 			</Routes>
