@@ -36,7 +36,7 @@ const SignUp = ({ admins }) => {
             return;
         }
         console.log(user);
-        axios.post("/register", user)
+        axios.post("/api/register", user)
         .then((res) => {
             if (res.data.Message === "User already exists") {
                 setInfo({message: "Пользователь уже существует", status: true});

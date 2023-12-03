@@ -75,7 +75,7 @@ body {
             display: flex;
             justify-content: center;
 
-            .Dashboard {
+            .Dashboard, .CartUser {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
 
@@ -102,7 +102,6 @@ body {
                         margin: 0.5em;
                     }
                     button {
-                        background-color: rgb(255, 255, 124);
                         align-self: center;
                         border: none;
                         padding: 1em;
@@ -110,9 +109,16 @@ body {
                         width: 100%;
                         transition: all 0.3s ease-in;
                     }
+                    button.InCart {
+                        background-color: rgb(255, 255, 124);
+                    }
+                    button.OutCart {
+                        background-color: rgb(208, 96, 106);
+                    }
                     button:hover {
+                        cursor: pointer;
                         width: 50%;
-                        background-color: rgb(191, 191, 92);
+                        opacity: 0.6;
                     }
                 }
             }

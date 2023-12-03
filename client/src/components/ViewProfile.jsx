@@ -11,7 +11,7 @@ const ViewProfile = () => {
 	})
 
 	const ProofOk = () => {
-		axios.post('/delete_user', {email: localStorage.getItem('user_email')});
+		axios.post('/api/delete_user', {email: localStorage.getItem('user_email')});
 		localStorage.clear();
 		navigate('/register');
 	}

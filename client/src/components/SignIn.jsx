@@ -21,7 +21,7 @@ const SignIn = ({ admins }) => {
 
 	const getUser = () => {
 		setUser({...user, password: sha256(user.password).toString()});
-		axios.post('/login', user)
+		axios.post('/api/login', user)
 		.then((res) => {
 			if (res.data.Message === "User not found") {
 				setInfo({message: "Пользователь не найден", status: true});

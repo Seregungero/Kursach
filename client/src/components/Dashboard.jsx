@@ -13,7 +13,7 @@ const Dashboard = () => {
 	useEffect(() => get_products, []);
 
 	const get_products = () => {
-		axios.get('/products')
+		axios.get('/api/products')
 		.then((res) => {
 			setCards(res.data);
 		})
@@ -24,7 +24,7 @@ const Dashboard = () => {
 	}
 
 	const add_cart = (id_product) => {
-		axios.post('/cart/add/' + id_product, {email: localStorage.getItem('user_email')})
+		axios.post('/api/cart/add/' + id_product, {email: localStorage.getItem('user_email')})
 		.then((resp) => {
 			if (resp.data !== 'success') {
 				setInfo({message: resp.data, status: true});
@@ -38,10 +38,10 @@ const Dashboard = () => {
 				cards.map((c) => 
 					<div className="card" key={c.id}>
 						{(localStorage.getItem("super_user") == "1") && <FaRegTrashAlt className="AdminIcon" onClick={() => {
-							axios.post("/delete/product/" + c.id);
+							axios.get("/api/delete/product/" + c.id);
 							get_products();
 						}}/>}
-						<img src={"http://localhost:5000/img/" + c.image} />
+						<img src={"http://localhost:5000/api/img/" + c.image} />
 						<hr/>
 						<span>Название</span>
 						<p>{c.title}</p>
@@ -49,7 +49,7 @@ const Dashboard = () => {
 						<p>{c.description}</p>
 						<span>Цена</span>
 						<p>{c.price} руб.</p>
-						<button onClick={() => add_cart(c.id)}>В корзину</button>
+						<button className='InCart' onClick={() => add_cart(c.id)}>В корзину</button>
 					</div>
 				)
 			}
