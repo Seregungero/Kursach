@@ -1,16 +1,13 @@
 from flask import Flask, request, send_file
 from flask_cors import CORS
 import psycopg2 as psg
+import base64, uuid, os
 
 conn = psg.connect(database="delivery_base", user='postgres', password='1234')
 cursor = conn.cursor()
 
 app = Flask(__name__)
 CORS(app)
-
-@app.route('/members')
-def members():
-    return {"Members": ["Member1", "Member2", "Member3"]}
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -106,8 +103,9 @@ def get_cart_products():
 def get_image(image):
     return send_file('images/' + image)
 
-@app.route('/api/delete/product/<idi>')
-def delete_product(idi):
+@app.route('/api/delete/product/<image>/<idi>')
+def delete_product(image, idi):
+    os.remove('images/'+image)
     cursor.execute("delete from products where id = %s", ( idi, ))
     conn.commit()
     return "success"
@@ -134,16 +132,37 @@ def add_in_cart(id_product):
 
 @app.route('/api/cart/remove/<id_product>', methods=['POST'])
 def remove_from_cart(id_product):
-        email_user = request.get_json()['email']
-        cursor.execute("SELECT (cart) FROM users WHERE email=%s", (email_user,))
-        conn.commit()
-        cart_products = cursor.fetchone()
-        if cart_products is None: return ''
-        cart = ','.join(list(filter(lambda x: x != id_product, cart_products[0].split(','))))
-        cart = None if not cart else cart
-        cursor.execute("UPDATE users SET cart=%s WHERE email=%s", (cart, email_user,))
-        conn.commit()
-        return "Done"
+    email_user = request.get_json()['email']
+    cursor.execute("SELECT (cart) FROM users WHERE email=%s", (email_user,))
+    conn.commit()
+    cart_products = cursor.fetchone()
+    if cart_products is None: return ''
+    cart = ','.join(list(filter(lambda x: x != id_product, cart_products[0].split(','))))
+    cart = None if not cart else cart
+    cursor.execute("UPDATE users SET cart=%s WHERE email=%s", (cart, email_user,))
+    conn.commit()
+    return "Done"
+
+@app.route('/api/add/item', methods=['POST'])
+def add_item():
+    item_data = request.get_json()
+    title = item_data.get('title')
+    price = float(item_data.get('price').replace(',', '.'))
+    description = item_data.get('description')
+    description = description if description else None
+    image = item_data.get('file')
+    if image is None:
+        image = 'default.png'
+    else:
+        image_postfix = image.split(';')[0].split('/')[1]
+        image_name = str(uuid.uuid4())[:40]
+        image_data = image.split(',')[1]
+        with open('images/' + image_name + '.' + image_postfix, 'wb') as file_image:
+            file_image.write(base64.b64decode(image_data))
+        image = image_name + '.' + image_postfix
+    cursor.execute('INSERT INTO products (title, price, image, description) VALUES (%s, %s, %s, %s)', (title, price, image, description, ))
+    conn.commit()
+    return "Success"
 
 
 if __name__ == '__main__':

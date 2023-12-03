@@ -122,6 +122,22 @@ body {
                     }
                 }
             }
+            .AddItem {
+                .AddItemBut {
+                    padding: 1em;
+                    font-size: larger;
+                    background-color: #73ff8b;
+                    border-radius: 1em;
+                    border: none;
+                    width: fit-content;
+                    align-self: center;
+                    transition: all 0.3s ease-in-out;
+                }
+                .AddItemBut:hover {
+                    padding: 1em 3em;
+                    opacity: 0.6;
+                }
+            }
             .ViewProfile {
                 border: 1px solid white;
                 padding: 1em;
@@ -137,13 +153,24 @@ body {
                 p {
                     font-size: 2em;
                 }
-                button {
+                button, .AddProd {
+                    font-size: 1em;
+                    color: black;
+                    text-decoration: none;
                     align-self: center;
                     width: 50%;
                     border-radius: 1em;
                     border-width: 0;
                     background-color: rgb(255, 99, 99);
                     padding: 1em;
+                    transition: all 0.3s ease-in-out;
+                }
+                .AddProd {
+                    background-color: #73ff8b;
+                    margin: 1em 0;
+                }
+                .AddProd:hover, button:hover {
+                    padding: 2em;
                 }
                 .iconsChoises {
                     display: flex;
@@ -202,12 +229,12 @@ body {
         }
     }
 }
-.SignUp, .SignIn {
+.SignUp, .SignIn, .AddItem{
     display: flex;
     flex-direction: column;
     gap: 1em;
     width: 22vw;
-    input {
+    input, textarea {
         padding: 1em;
         font-size: 1em;
         border-radius: 0.7em;
@@ -215,13 +242,13 @@ body {
         outline: none;
         border: 1px solid black;
     }
-    input:focus {
+    input:focus, textarea:focus {
         -webkit-text-fill-color: $secondColor;
         border: 1px solid red;
         background-color: rgb(143, 190, 237);
         border-radius: 1.5em;
     }
-    input:hover {
+    input:hover, textarea:hover {
         border-radius: 1em;
         background-color: rgb(179, 179, 179);
     }

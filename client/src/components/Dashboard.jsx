@@ -38,7 +38,7 @@ const Dashboard = () => {
 				cards.map((c) => 
 					<div className="card" key={c.id}>
 						{(localStorage.getItem("super_user") == "1") && <FaRegTrashAlt className="AdminIcon" onClick={() => {
-							axios.get("/api/delete/product/" + c.id);
+							axios.get("/api/delete/product/" + c.image + '/' + c.id);
 							get_products();
 						}}/>}
 						<img src={"http://localhost:5000/api/img/" + c.image} />
