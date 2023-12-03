@@ -20,7 +20,7 @@ const Dashboard = () => {
 	}
 
 	const seter = () => {
-		setInfo({...info, seter: false});
+		setInfo({...info, status: false});
 	}
 
 	const add_cart = (id_product) => {
@@ -54,7 +54,7 @@ const Dashboard = () => {
 				)
 			}
 			{
-				(info.status) && (<ErrorMesage message={info.message} seter={seter}/>)
+				(info.status) && (<ErrorMesage message={info} seter={seter}/>)
 			}
 		</div>
 	)
