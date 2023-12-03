@@ -76,11 +76,12 @@ def delete_product(idi):
 @app.route('/cart/add/<id_product>', methods=['POST'])
 def add_in_cart(id_product):
     print(id_product)
-    cursor.execute("SELECT (cart) FROM users WHERE email = %s", ( request.get_json()['email'], ))
+    email_user = request.get_json()['email']
+    cursor.execute("SELECT (cart) FROM users WHERE email = %s", ( email_user, ))
     conn.commit()
     resp = cursor.fetchone()[0]
     if resp is None:
-        cursor.execute("INSERT INTO users (cart) VALUES (%s)", ( id_product ,))
+        cursor.execute("UPDATE users SET cart=%s WHERE email = %s", ( id_product, email_user, ))
         conn.commit()
         return "success"
     fav: list = resp.split(',')
@@ -89,7 +90,7 @@ def add_in_cart(id_product):
             return "У вас уже есть этот товар в корзине"
     fav.append(id_product)
     fav = ','.join(fav)
-    cursor.execute("INSERT INTO users (cart) VALUES (%s)", ( fav,))
+    cursor.execute("UPDATE users SET cart=%s WHERE email = %s", (fav, email_user, ))
     conn.commit()
     return "success"
 
