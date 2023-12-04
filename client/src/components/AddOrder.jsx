@@ -28,12 +28,13 @@ const AddOrder = () => {
 	return (
 		<div className="AddOrder">
 			<h4>Выберите адрес</h4>
-			<input type="text" onChange={sendOrder} placeholder='Введите адрес' list='cities'/>
+			<input type="text" className='AddOrderAddres' onChange={sendOrder} placeholder='Введите адрес' list='cities'/>
 			<datalist id="cities">
 				{
 					addres.map((elem, id) => <option key={id} value={elem.value}/>)
 				}
 			</datalist>
+			<input type="button" value="Подтвердить" className='SubmitOrderBut'/>
 		</div>
 	)
 }
