@@ -73,7 +73,29 @@ body {
         .Main {
             margin: 1em;
             display: flex;
+            flex-direction: column;
             justify-content: center;
+
+            .AddOrderLink {
+                align-self: center;
+                color: white;
+                border-radius: 0.5em;
+                padding: 1em;
+                background-color:rgb(20, 95, 20);
+                text-decoration: none;
+                transition: all 0.3s ease-in-out;
+            }
+            .AddOrderLink:hover {
+                border-radius: 1em;
+                padding: 1em 3em;
+                box-shadow: 3px 3px 10px #3ff85f;
+            }
+
+            .AddOrder {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+            }
 
             .Dashboard, .CartUser {
                 display: grid;
@@ -86,6 +108,7 @@ body {
                     margin: 1em;
                     padding: 1em;
                     border-radius: 1em;
+                    box-shadow: 0 0 10px white;
                     .AdminIcon {
                         color: $secondColor;
                         cursor: pointer;

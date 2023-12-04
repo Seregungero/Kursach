@@ -11,13 +11,19 @@ function App() {
 		"german@gmail.com"
 	]
 	// ------------------------------------------------------------------
-	return <div className="App">
+	return (
+	<>
+	<div className="App">
 		<Header />
 		<hr />
 		<Main admins={super_users_emails}/>
 		<hr />
 		<Footer />
 	</div>
+	
+	<script src="./vendor/autocomplete.js"></script>
+	</>
+	)
 }
 
 

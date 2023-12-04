@@ -26,7 +26,7 @@ def register():
 @app.route('/api/login', methods=['POST'])
 def login():
     req = request.get_json()
-    cursor.execute("SELECT * FROM users WHERE email = %s", ( req['email'], ))
+    cursor.execute("SELECT * FROM users WHERE (email = %s) AND (password = %s)", ( req['email'], req['password'], ))
     conn.commit()
     resp_user = cursor.fetchone()
     if resp_user is None:
@@ -54,16 +54,16 @@ def products():
     data = []
     try:
         all_products = cursor.fetchall()
+        for i in all_products:
+            card = dict()
+            card["id"] = i[0]
+            card["title"] = i[1]
+            card["price"] = i[2]
+            card["image"] = i[3]
+            card["description"] = i[4]
+            data.append(card)
     except:
         return ''
-    for i in all_products:
-        card = dict()
-        card["id"] = i[0]
-        card["title"] = i[1]
-        card["price"] = i[2]
-        card["image"] = i[3]
-        card["description"] = i[4]
-        data.append(card)
     return data
 
 @app.route('/api/cart/get_products', methods=['POST'])

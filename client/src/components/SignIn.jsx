@@ -20,26 +20,27 @@ const SignIn = ({ admins }) => {
     }
 
 	const getUser = () => {
-		setUser({...user, password: sha256(user.password).toString()});
+		// console.log(sha256(user.password).toString());
+		// setUser({...user, password: sha256(user.password).toString()});
 		axios.post('/api/login', user)
 		.then((res) => {
 			if (res.data.Message === "User not found") {
 				setInfo({message: "Пользователь не найден", status: true});
 			} else {
 				localStorage.setItem("user_name", res.data.name);
-                localStorage.setItem("user_surname", res.data.surname);
-                localStorage.setItem("user_email", res.data.email);
-                localStorage.setItem("user_tel", res.data.tel);
-                localStorage.setItem("super_user", (admins.includes(res.data.email) !== false) ? "1" : "0");
+				localStorage.setItem("user_surname", res.data.surname);
+				localStorage.setItem("user_email", res.data.email);
+				localStorage.setItem("user_tel", res.data.tel);
+				localStorage.setItem("super_user", (admins.includes(res.data.email) !== false) ? "1" : "0");
 				navigate('/');
 			}
 		});
+		
 	}
-
 	return (<>
 		<form className='SignIn'>
 			<input type="email" name="email" placeholder='Введите email' onChange={(e) => setUser({...user, email: e.target.value})} />
-			<input type="password" name="password" placeholder='Введите пароль' onChange={(e) => setUser({...user, password: e.target.value})} />
+			<input type="password" name="password" placeholder='Введите пароль' onChange={(e) => setUser({...user, password: sha256(e.target.value).toString()})} />
 			<input type="button" value="Войти" onClick={ getUser } />
 		</form>
 		{(info.status) ? (<ErrorMesage message={info} seter={infoFalse} />): undefined}
