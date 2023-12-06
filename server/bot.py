@@ -50,7 +50,6 @@ async def test(mes: types.Message):
                 MESSAGE += f"ID Заказа: {order_id}\n"
                 MESSAGE += f"Название Товара: {title_order}\n"
                 MESSAGE += f"Адрес доставки: {addres}"
-                print(MESSAGE)
                 await mes.answer(MESSAGE)
         global_users[key] = {'email': '', 'password': ''}
 
