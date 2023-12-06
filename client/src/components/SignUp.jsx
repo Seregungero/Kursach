@@ -63,7 +63,7 @@ const SignUp = ({ admins }) => {
         setUser({...user, password: sha256(e.target.value).toString()});
     }
 
-    return (<div>
+    return (<>
         <form className="SignUp">
             <input type="text" placeholder="Введите имя" onChange={(e) => setUser({...user, name: e.target.value})}/>
             <input type="text" placeholder="Введите фамилию" onChange={(e) => setUser({...user, surname: e.target.value})}/>
@@ -77,7 +77,7 @@ const SignUp = ({ admins }) => {
             <input type="button" value="Зарегестрироваться" onClick={sendFormRegister}/>
         </form>
         {(info.status) ? <ErrorMesage message={info} seter={infoFalse} /> : ""}
-    </div>
+    </>
     );
 }
 
