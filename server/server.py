@@ -164,6 +164,24 @@ def add_item():
     conn.commit()
     return "Success"
 
+@app.route("/api/order/add", methods=["POST"])
+def add_order():
+    user_email = request.get_json()['email']
+    addres = request.get_json()['addres']
+    cursor.execute('SELECT * FROM users WHERE email = %s', (user_email,))
+    conn.commit()
+    *_, user_cart = cursor.fetchone()
+    cursor.execute("SELECT * FROM products WHERE id in %s", (tuple(str(user_cart).split(',')), ))
+    conn.commit()
+    add_order = []
+    for i in cursor:
+        id_prod, title_prod, *_ = i
+        add_order.append(str((id_prod, title_prod, user_email, addres)))
+    cursor.execute(f"INSERT INTO orders (prod_id, title, user_email, addres) VALUES {', '.join(add_order)}")
+    conn.commit()
+    cursor.execute("UPDATE users SET cart=%s WHERE email=%s", (None, user_email ,))
+    return "Success"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
